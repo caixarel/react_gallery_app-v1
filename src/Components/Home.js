@@ -1,11 +1,21 @@
 import {NavLink} from 'react-router-dom'
 import React,{Component} from 'react';
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
+
+
 class Home extends Component {    
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+      };
 
   handleSubmit =(e)=>{
     e.preventDefault();
     let search =this.searchText.value;
     this.props.history.push(search);
+    this.props.searchFunction(search);
     e.currentTarget.reset();
   }
 
@@ -39,4 +49,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

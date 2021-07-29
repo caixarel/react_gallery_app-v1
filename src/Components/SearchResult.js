@@ -1,32 +1,41 @@
 import React,{Component} from 'react';
+import PropTypes from "prop-types";
+import { withRouter,useHistory } from "react-router";
+import axios from 'axios';
 import config from '../Components/config'
-import axios from "axios";
-
 
 class SearchResult extends Component  {
-  state={
-    images:[]
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
+
+ 
+  componentDidMount(){
+    this.props.searchFunction(this.props.match.params.search)
   }
-  componentDidMount() {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${config}&tags=${this.props.match.params.search}&per_page=24&format=json&nojsoncallback=1`)
-      .then(response => {
-        this.setState({ images: response.data.photos.photo });
-      })
-      .catch(error => {
-        console.log('Error fetching and parsing data', error);
-      });}
 
   render(){
-    if(this.state.images.length>1){
+    const pics=this.props.data.otherImages;
+    if(this.props.data.isLoading){
+      return (
+        <div className="photo-container">
+          <h2>Results</h2>
+          <h2>Loading...</h2>
+        </div>
+      )
+    }
+    else if(pics.length>1){
       return (
         <div className="photo-container">
           <h2>Results</h2>
           <ul>
-          {this.state.images.map(image=>
-            <li key={image.id}>
-              <img src={`https://farm5.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg` }alt="" />
-            </li>
-          )}
+          {pics.map(pic=>
+              <li key={pic.id}>
+                <img src={`https://farm5.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}.jpg` }alt="" />
+              </li>
+            )}
           </ul>
         </div>
       );
@@ -36,7 +45,7 @@ class SearchResult extends Component  {
         <div className="photo-container">
         <h2>Results</h2>
         <ul>
-        <li class="not-found">
+        <li className="not-found">
             <h3>No Results Found</h3>
             <p>You search did not return any results. Please try again.</p>
         </li>
@@ -49,5 +58,5 @@ class SearchResult extends Component  {
   
 }
 
-export default SearchResult;
+export default withRouter(SearchResult);
 

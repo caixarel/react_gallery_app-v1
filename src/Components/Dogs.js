@@ -1,8 +1,14 @@
 import React,{Component} from 'react';
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 
 class Dogs extends Component{
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
     render(){
-      
       const dogs=this.props.data.dogImages
         return(
             <div className="photo-container">
@@ -19,5 +25,5 @@ class Dogs extends Component{
     }
 }
 
-export default Dogs;
+export default withRouter(Dogs);
 
