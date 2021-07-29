@@ -14,6 +14,17 @@ class SearchResult extends Component  {
  
   componentDidMount(){
     this.props.searchFunction(this.props.match.params.search)
+    
+
+  }
+
+  componentDidUpdate(){
+
+    if(this.props.data.searchText !=this.props.match.params.search ){
+      this.props.searchFunction(this.props.match.params.search);
+
+    }
+
   }
 
   render(){

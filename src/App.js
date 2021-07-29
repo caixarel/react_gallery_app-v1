@@ -16,7 +16,8 @@ class App extends Component {
     catImages:[],
     computersImages:[],
     otherImages:[],
-    isLoading:true
+    isLoading:true,
+    searchText:''
   };
 
   componentDidMount() {
@@ -47,6 +48,7 @@ class App extends Component {
   }
   
   searchImages =(value)=>{
+    this.setState({searchText:value});
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${config}&tags=${value}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({ otherImages: response.data.photos.photo });
