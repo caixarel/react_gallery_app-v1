@@ -1,10 +1,9 @@
 import React,{Component} from 'react';
 import PropTypes from "prop-types";
-import { withRouter,useHistory } from "react-router";
-import axios from 'axios';
-import config from '../Components/config'
+import { withRouter } from "react-router";
 
-class SearchResult extends Component  {
+
+class Gallery extends Component  {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -15,14 +14,12 @@ class SearchResult extends Component  {
   componentDidMount(){
     this.props.searchFunction(this.props.match.params.search)
     
-
   }
 
   componentDidUpdate(){
 
-    if(this.props.data.searchText !=this.props.match.params.search ){
+    if(this.props.data.searchText !==this.props.match.params.search ){
       this.props.searchFunction(this.props.match.params.search);
-
     }
 
   }
@@ -69,5 +66,5 @@ class SearchResult extends Component  {
   
 }
 
-export default withRouter(SearchResult);
+export default withRouter(Gallery);
 

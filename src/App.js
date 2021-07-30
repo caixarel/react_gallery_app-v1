@@ -6,8 +6,8 @@ import Home from './Components/Home'
 import config from './Components/config'
 import { BrowserRouter, Route ,Switch,Redirect} from "react-router-dom";
 import axios from "axios";
-import SearchResult from "./Components/SearchResult";
-
+import Gallery from "./Components/Gallery";
+import  NotFound from "./Components/NotFound";
 
 
 class App extends Component {
@@ -66,10 +66,11 @@ class App extends Component {
         <Route path='/' render={()=><Home data={this.state} searchFunction={this.searchImages}/>} />
           <Switch>
             <Route exact path='/' render={()=><Redirect to={`/Dogs`}/>}/>
-            <Route path='/Dogs' render={()=><Dogs data={this.state} />}/>
-            <Route path='/Cats' render={()=><Cats data={this.state}/>} />
-            <Route path='/Computers' render={()=><Computers data={this.state}/>} />
-            <Route path='/:search' render={()=><SearchResult data={this.state} searchFunction={this.searchImages}/>} />
+            <Route exact path='/Photo/Dogs' render={()=><Dogs data={this.state} />}/>
+            <Route exact path='/Photo/Cats' render={()=><Cats data={this.state}/>} />
+            <Route exact path='/Photo/Computers' render={()=><Computers data={this.state}/>} />
+            <Route path='/Photo/:search' render={()=><Gallery data={this.state} searchFunction={this.searchImages}/>} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </BrowserRouter>
